@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#PBS -l nodes=1:ppn=4,walltime=24:00:00
+#PBS -l vmem=64gb
+#PBS -N Comsol
+#PBS -e $FILENAME_error.txt
+#PBS -o $FILENAME_output.txt
+#### For getting emails: PBS -M yourName@email.com
+####for receiving emails when certain tasks are complete (specified by PBS -m option):
+####PBS -m abe #emails when the job is aborted(a),begins execution(b), is terminate(e)
+####PBS -M dkwong@iu.edu
+
+cd $PBS_O_WORKDIR
+echo "Current working directory is `pwd`"
+echo $PBS_JOBNAME
+echo "Starting run at: `date`"
+comsol batch -inputfile $FILENAME.mph -outputfile $FILENAME_solved.mph -np $PBS_NUM_PPN \
+-tmpdir /N/dc2/scratch/dkwong/ -recoverydir /N/dc2/scratch/dkwong/
+echo "Program diffuse finished with exit code $? at: `date`"
