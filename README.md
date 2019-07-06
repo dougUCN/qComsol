@@ -34,8 +34,9 @@ optional arguments:
   -d DELAY, --delay DELAY  
                         Delay time for job resubmission [min]  
   -t TRIES, --tries TRIES  
-                        Max # tries for resubmission  
-  -r, --removePBS       Removes PBS job submission scripts
+                        Max # tries for resubmission   
+  -r, --removePBS       Removes PBS job submission scripts  
+  -nc, --noCheck        Don't submit checking job to queue  
 </pre>
 
 comsolJob.pbs  

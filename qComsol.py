@@ -102,7 +102,7 @@ def submitToQueue(filename, template, check, args, triesLeft):
     # Submit checking job
     if not args.noCheck:
         checkingJob = subprocess.check_output(["qsub", checkPBS])[:-4]
-    else
+    else:
         checkingJob = "(Checking job not submitted)"
     print("Job numbers: ", comsolJob, ", ", checkingJob)
 
