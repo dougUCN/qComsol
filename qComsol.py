@@ -15,7 +15,8 @@ def main():
     parser.add_argument("-d", "--delay", default=0, type=int, help="Delay time for job resubmission [min]")
     parser.add_argument("-t", "--tries", default=0, type=int, help="Max # tries for resubmission")
     parser.add_argument("-r", "--removePBS", action="store_true", help="Removes PBS job submission scripts")
-    parser.add_argument("-c", "--check", action="store_true")
+    parser.add_argument("-nc", "--noCheck", action="store_true", help="Don't submit checking job to queue")
+    parser.add_argument("-c", "--check", action="store_true", help="Should be called only after the initial job has been run")
     args = parser.parse_args()
 
     # args.filename should accept arguments both w/ and w/o '.mph'
@@ -44,6 +45,8 @@ def main():
         # If no error, quit
         print("The comsol job ran without a license issue")
         print("[resubmission attempts left: ", triesLeft, "]")
+
+        # Clean up more stuff
         os.remove( filename+"_error.txt" )
         os.remove( filename+"_check_error.txt" )
         return
@@ -97,7 +100,10 @@ def submitToQueue(filename, template, check, args, triesLeft):
     copyReplace(check, checkPBS, replacements)
 
     # Submit checking job
-    checkingJob = subprocess.check_output(["qsub", checkPBS])[:-4]
+    if not args.noCheck:
+        checkingJob = subprocess.check_output(["qsub", checkPBS])[:-4]
+    else
+        checkingJob = "(Checking job not submitted)"
     print("Job numbers: ", comsolJob, ", ", checkingJob)
 
     if args.removePBS:

@@ -6,7 +6,7 @@ one attempts to submit jobs to a cluster, when one has no control over when
 the job starts running  
 
 qComsol submits a comsol job to a Torque queue, and resubmits it if it was
-rejected  
+rejected because of a license error  
 
 Getting started
 --------------------
@@ -22,7 +22,6 @@ Your completed comsol job will be a new file titled filename_solved.mph
 Usage  
 ----------------
 <pre>  
-
 usage: qComsol.py [-h] [-d DELAY] [-t TRIES] [-r] filename  
 
 submit comsol job to TORQUE system  
@@ -36,21 +35,24 @@ optional arguments:
                         Delay time for job resubmission [min]  
   -t TRIES, --tries TRIES  
                         Max # tries for resubmission  
-  -r, --removePBS       Removes PBS job submission scripts at the end of a run  
-
+  -r, --removePBS       Removes PBS job submission scripts
 </pre>
 
 comsolJob.pbs  
 ----------------  
 Tells the torque queue to run the comsol file  
 
-Change settings here appropriately. Please note that $FILENAME, $TRIESLEFT, $DELAY,
-and $COMSOL_JOB are not actually environment variables. They are edited by qComsol.py  
+Change settings here appropriately. I've currently picked arbitrary values
+for vmem and ppn. For configuring multiple node parallelization check out the
+"Useful documentation on Torque and Comsol" section  
+
+Please note that $FILENAME, $TRIESLEFT, $DELAY,and $COMSOL_JOB are not
+actually environment variables. They are edited by qComsol.py  
 
 check.pbs  
 ---------------  
 Note that the [--delay] flag in qComsol.py is limited by the wall time you set
-in this config file  
+in this config file
 
 Python version  
 ------------------  
