@@ -5,7 +5,7 @@
 #PBS -N ComsolPostCheck
 #PBS -e $FILENAME_check_error.txt
 #PBS -o $FILENAME_check_output.txt
-#PBS -W depend=afterany:$COMSOL_JOB
+#PBS -W depend=afterok:$COMSOL_JOB
 
 cd $PBS_O_WORKDIR
 echo "Starting post check at: `date`"
